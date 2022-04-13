@@ -19,6 +19,9 @@ public class EquipmentController implements Initializable {
     private Parent scene;
 
     @FXML
+    private ComboBox comboEquipmentType;
+
+    @FXML
     private TextField fieldEquipmentSearch;
 
     @FXML
@@ -68,7 +71,15 @@ public class EquipmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        colExtra1.setText("Test");
+        //Hide extra data columns on view start
+        colExtra1.setVisible(false);
+        colExtra2.setVisible(false);
+        colLocation.setPrefWidth(240);
+        colUser.setPrefWidth(240);
+    }
+
+    public void onActionEquipmentTypeSelect(ActionEvent event) {
+
     }
 
     public void onKeyPressSearchEquipment(KeyEvent keyEvent) {
