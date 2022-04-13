@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EditEquipmentController">
+<AnchorPane prefHeight="550.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AddUserController">
     <children>
         <VBox alignment="CENTER" prefHeight="550.0" prefWidth="450.0" spacing="10.0">
             <children>
                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="450.0">
                     <children>
-                        <Label text="Edit Equipment">
+                        <Label text="Add New User">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
@@ -53,32 +53,33 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <TextField fx:id="fieldId" alignment="CENTER" disable="true" prefWidth="15.0" promptText="DISPLAY EQUIPMENT ID HERE" GridPane.columnIndex="1" />
-                        <Label text="Type" GridPane.rowIndex="1">
+                        <TextField fx:id="fieldId" alignment="CENTER" disable="true" prefWidth="15.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
+                        <Label text="Full Name" GridPane.rowIndex="1">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <Label text="Model Number" GridPane.rowIndex="2">
+                        <TextField fx:id="fieldFullName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Password" GridPane.rowIndex="3">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <TextField fx:id="fieldModel" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                        <Label text="Serial Number" GridPane.rowIndex="3">
+                        <TextField fx:id="fieldPassword" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <Label text="Type" GridPane.rowIndex="4">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <TextField fx:id="fieldSerial" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                        <Label text="Location" GridPane.rowIndex="4">
+                        <ComboBox fx:id="comboUserType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <Label text="Department" GridPane.rowIndex="5">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <ComboBox fx:id="comboLocation" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="User" GridPane.rowIndex="5">
+                        <Label text="Username" GridPane.rowIndex="2">
                             <font>
                                 <Font size="14.0" />
-                            </font></Label>
-                        <ComboBox fx:id="comboType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="fieldUser" alignment="CENTER" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="fieldUsername" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ComboBox fx:id="comboDepartment" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
                 <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
