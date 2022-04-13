@@ -38,9 +38,6 @@ public class AddEquipmentController implements Initializable {
     private TextField fieldUser;
 
     @FXML
-    private TextField fieldQuantity;
-
-    @FXML
     private Button btnSave;
 
     @FXML

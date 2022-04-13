@@ -67,12 +67,11 @@
                         <TableView fx:id="tableUserInventory" prefHeight="385.0" prefWidth="1070.0">
                             <columns>
                                 <TableColumn fx:id="colEquipmentId" prefWidth="104.0" text="Equipment ID" />
-                                <TableColumn fx:id="colQuantity" prefWidth="92.0" text="Quantity" />
                                 <TableColumn fx:id="colType" prefWidth="141.0" text="Type" />
                                 <TableColumn fx:id="colModel" prefWidth="207.0" text="Model Number" />
                                 <TableColumn fx:id="colSerial" prefWidth="198.0" text="Serial Number" />
                                 <TableColumn fx:id="colEntryDateTime" prefWidth="184.0" text="Entry Date/Time" />
-                                <TableColumn fx:id="colLocation" prefWidth="143.0" text="Location" />
+                                <TableColumn fx:id="colLocation" prefWidth="235.0" text="Location" />
                             </columns>
                             <VBox.margin>
                                 <Insets left="30.0" right="30.0" top="10.0" />

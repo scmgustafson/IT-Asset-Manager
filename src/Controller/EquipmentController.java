@@ -28,9 +28,6 @@ public class EquipmentController implements Initializable {
     private TableColumn<?, ?> colEquipmentId;
 
     @FXML
-    private TableColumn<?, ?> colQuantity;
-
-    @FXML
     private TableColumn<?, ?> colType;
 
     @FXML

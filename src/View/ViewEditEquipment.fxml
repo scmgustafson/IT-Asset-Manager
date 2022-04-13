@@ -44,7 +44,6 @@
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                     <VBox.margin>
                         <Insets left="75.0" right="75.0" />
@@ -78,12 +77,6 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <Label text="Quantity" GridPane.rowIndex="6">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="fieldQuantity" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                         <ComboBox fx:id="comboType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="fieldUser" alignment="CENTER" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     </children>
