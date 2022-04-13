@@ -46,6 +46,12 @@ public class EquipmentController implements Initializable {
     private TableColumn<?, ?> colUser;
 
     @FXML
+    private TableColumn<?, ?> colExtra1;
+
+    @FXML
+    private TableColumn<?, ?> colExtra2;
+
+    @FXML
     private Label labelUIMessage;
 
     @FXML
@@ -62,7 +68,7 @@ public class EquipmentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        colExtra1.setText("Test");
     }
 
     public void onKeyPressSearchEquipment(KeyEvent keyEvent) {

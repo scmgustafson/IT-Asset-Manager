@@ -49,11 +49,13 @@
                             <columns>
                                 <TableColumn fx:id="colEquipmentId" maxWidth="125.0" minWidth="45.0" prefWidth="95.0" text="Equipment ID" />
                                 <TableColumn fx:id="colType" maxWidth="298.0" prefWidth="115.0" text="Type" />
-                                <TableColumn fx:id="colModel" maxWidth="632.0" prefWidth="169.0" text="Model Number" />
-                                <TableColumn fx:id="colSerial" maxWidth="632.0" prefWidth="182.0" text="Serial Number" />
-                                <TableColumn fx:id="colEntryDateTime" maxWidth="632.0" prefWidth="250.0" text="Entry Date/Time" />
-                                <TableColumn fx:id="colLocation" maxWidth="632.0" prefWidth="142.0" text="Location" />
-                                <TableColumn fx:id="colUser" maxWidth="632.0" prefWidth="176.0" text="User" />
+                                <TableColumn fx:id="colModel" maxWidth="632.0" prefWidth="137.0" text="Model Number" />
+                                <TableColumn fx:id="colSerial" maxWidth="632.0" prefWidth="166.0" text="Serial Number" />
+                                <TableColumn fx:id="colEntryDateTime" maxWidth="632.0" prefWidth="142.0" text="Entry Date/Time" />
+                                <TableColumn fx:id="colLocation" maxWidth="632.0" prefWidth="133.0" text="Location" />
+                                <TableColumn fx:id="colUser" maxWidth="632.0" prefWidth="106.0" text="User" />
+                        <TableColumn fx:id="colExtra1" maxWidth="632.0" prefWidth="121.0" text="Extra 1" />
+                        <TableColumn fx:id="colExtra2" maxWidth="632.0" prefWidth="114.0" text="Extra 2" />
                             </columns>
                         </TableView>
                         <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
