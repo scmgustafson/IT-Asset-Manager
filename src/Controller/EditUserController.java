@@ -24,7 +24,9 @@ public class EditUserController implements Initializable {
     private Stage stage;
     private Parent scene;
 
+    private User passUser;
     private User sentUser;
+    private FXMLLoader loader;
 
     @FXML
     private TextField fieldId;
@@ -52,6 +54,7 @@ public class EditUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loader = new FXMLLoader();
         //Populate combo boxes
         ObservableList<String> userTypes = FXCollections.observableArrayList();
         userTypes.add("Standard");
@@ -136,11 +139,18 @@ public class EditUserController implements Initializable {
             User user = new User(userId, fullname, username, password, type, department);
             try {
                 DAOUsers.update(user);
+
                 //Break out of loop and move to previous screen
+                loader.setLocation(getClass().getResource("/View/ViewUsers.fxml"));
+                loader.load();
+                UsersController controller = loader.getController();
+                controller.sendUser(sentUser);
+
                 stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-                scene = FXMLLoader.load(getClass().getResource("/View/ViewUsers.fxml"));
+                scene = loader.getRoot();
                 stage.setScene(new Scene(scene));
                 stage.show();
+
                 loopFlag = false;
                 break;
             }
@@ -151,11 +161,15 @@ public class EditUserController implements Initializable {
         }
     }
 
-
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
+        loader.setLocation(getClass().getResource("/View/ViewUsers.fxml"));
+        loader.load();
+        UsersController controller = loader.getController();
+        controller.sendUser(passUser);
+
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewUsers.fxml"));
+        scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -179,5 +193,9 @@ public class EditUserController implements Initializable {
         departments.add("Accounting");
         departments.add("Executives");
         comboDepartment.getSelectionModel().select(departments.indexOf(sentUser.getDepartment()));
+    }
+
+    public void passUser(User user) {
+        this.passUser = user;
     }
 }

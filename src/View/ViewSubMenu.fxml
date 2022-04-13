@@ -4,35 +4,40 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SubMenuController">
     <children>
-        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" spacing="20.0">
+        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="400.0" spacing="10.0">
             <children>
                 <Label text="Program Navigation">
                     <VBox.margin>
-                        <Insets top="25.0" />
+                        <Insets top="20.0" />
                     </VBox.margin>
                     <font>
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnInventory" mnemonicParsing="false" onAction="#onActionDisplayEquipment" prefHeight="39.0" prefWidth="160.0" text="INVENTORY">
-                    <font>
-                        <Font size="18.0" />
-                    </font>
-                    <VBox.margin>
-                        <Insets top="20.0" />
-                    </VBox.margin>
-                </Button>
-                <Button fx:id="btnUserManagement" mnemonicParsing="false" onAction="#onActionDisplayUserManagement" prefHeight="39.0" prefWidth="160.0" text="USER MANAGEMENT">
-                    <font>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label text="Welcome:">
+                     <font>
                         <Font size="14.0" />
-                    </font>
-                </Button>
-                <Button fx:id="btnReports" mnemonicParsing="false" onAction="#onActionDisplayReports" prefHeight="39.0" prefWidth="160.0" text="REPORTS">
+                     </font>
+                  </Label>
+                  <Label fx:id="labelUserName" text="USERNAME">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+                <Button fx:id="btnInventory" mnemonicParsing="false" onAction="#onActionDisplayEquipment" prefHeight="50.0" prefWidth="160.0" text="INVENTORY">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -40,7 +45,20 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionExit" prefHeight="39.0" prefWidth="160.0" text="BACK">
+                <Button fx:id="btnUserManagement" mnemonicParsing="false" onAction="#onActionDisplayUserManagement" prefHeight="50.0" prefWidth="160.0" text="USER MANAGEMENT">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </Button>
+                <Button fx:id="btnReports" mnemonicParsing="false" onAction="#onActionDisplayReports" prefHeight="50.0" prefWidth="160.0" text="REPORTS">
+                    <font>
+                        <Font size="18.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </Button>
+                <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionExit" prefHeight="50.0" prefWidth="160.0" text="BACK">
                     <font>
                         <Font size="18.0" />
                     </font>

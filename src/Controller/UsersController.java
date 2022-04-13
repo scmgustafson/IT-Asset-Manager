@@ -32,6 +32,10 @@ public class UsersController implements Initializable {
     private Stage stage;
     private Parent scene;
 
+    private FXMLLoader loader;
+
+    private User sentUser;
+
     @FXML
     private TextField fieldUserSearch;
 
@@ -70,6 +74,7 @@ public class UsersController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loader = new FXMLLoader();
         //Hide UI feedback message
         labelUIMessage.setVisible(false);
         //Populate User TableView with User objects from the database
@@ -140,8 +145,13 @@ public class UsersController implements Initializable {
 
     @FXML
     void onActionDisplayAddUser(ActionEvent event) throws IOException {
+        loader.setLocation(getClass().getResource("/View/ViewAddUser.fxml"));
+        loader.load();
+        AddUserController controller = loader.getController();
+        controller.sendUser(sentUser);
+
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewAddUser.fxml"));
+        scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.show();
     }
@@ -151,12 +161,6 @@ public class UsersController implements Initializable {
         //Prepare alert object
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("EditUser Error");
-
-        //Prepare loader to pass User data
-        var loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/ViewEditUser.fxml"));
-        loader.load();
-
         //Check to see if a User is selected in table
         User selectedUser = tableUsers.getSelectionModel().getSelectedItem();
         //Check that a user is selected
@@ -166,7 +170,11 @@ public class UsersController implements Initializable {
         }
         else {
             //Get controller of view that data is being passed to and call sendUser()
+            //Prepare loader to pass User data
+            loader.setLocation(getClass().getResource("/View/ViewEditUser.fxml"));
+            loader.load();
             EditUserController controller = loader.getController();
+            controller.passUser(sentUser);
             controller.sendUser(selectedUser);
 
             //Change view to EditUser view
@@ -212,13 +220,23 @@ public class UsersController implements Initializable {
 
     @FXML
     void onActionExit(ActionEvent event) throws IOException {
+        loader.setLocation(getClass().getResource("/View/ViewSubMenu.fxml"));
+        loader.load();
+        SubMenuController controller = loader.getController();
+        controller.sendUser(sentUser);
+
+        //Change view to EditUser view
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewSubMenu.fxml"));
+        scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
     public void refreshTable() {
         tableUsers.setItems(DAOUsers.selectAllUsers());
+    }
+
+    public void sendUser(User user) {
+        this.sentUser = user;
     }
 }

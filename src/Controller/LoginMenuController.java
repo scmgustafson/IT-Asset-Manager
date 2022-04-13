@@ -26,6 +26,8 @@ public class LoginMenuController implements Initializable {
     private Stage stage;
     private Parent scene;
 
+    private FXMLLoader loader;
+
     @FXML
     private TextField fieldUsername;
 
@@ -40,7 +42,15 @@ public class LoginMenuController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        //Prepare loader to pass User data
+        loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/ViewSubMenu.fxml"));
+        try {
+            loader.load();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
@@ -48,10 +58,6 @@ public class LoginMenuController implements Initializable {
         //Prepare alert object
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Login Credential Error");
-        //Prepare loader to pass User data
-        var loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("/View/ViewSubMenu.fxml"));
-        loader.load();
         //Declare variables for input validation
         String enteredUser = "";
         String enteredPass = "";

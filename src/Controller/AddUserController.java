@@ -24,6 +24,9 @@ public class AddUserController implements Initializable {
     private Stage stage;
     private Parent scene;
 
+    private User sentUser;
+    private FXMLLoader loader;
+
     @FXML
     private TextField fieldId;
 
@@ -50,6 +53,7 @@ public class AddUserController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        loader = new FXMLLoader();
         //Populate combo boxes
         ObservableList<String> userTypes = FXCollections.observableArrayList();
         userTypes.add("Standard");
@@ -136,11 +140,18 @@ public class AddUserController implements Initializable {
             User user = new User(userId, fullname, username, password, type, department);
             try {
                 DAOUsers.insert(user);
+
                 //Break out of loop and move to previous screen
+                loader.setLocation(getClass().getResource("/View/ViewUsers.fxml"));
+                loader.load();
+                UsersController controller = loader.getController();
+                controller.sendUser(sentUser);
+
                 stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-                scene = FXMLLoader.load(getClass().getResource("/View/ViewUsers.fxml"));
+                scene = loader.getRoot();
                 stage.setScene(new Scene(scene));
                 stage.show();
+
                 loopFlag = false;
                 break;
             }
@@ -153,9 +164,18 @@ public class AddUserController implements Initializable {
 
     @FXML
     void onActionCancel(ActionEvent event) throws IOException {
+        loader.setLocation(getClass().getResource("/View/ViewUsers.fxml"));
+        loader.load();
+        UsersController controller = loader.getController();
+        controller.sendUser(sentUser);
+
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewUsers.fxml"));
+        scene = loader.getRoot();
         stage.setScene(new Scene(scene));
         stage.show();
+    }
+
+    public void sendUser(User user) {
+        this.sentUser = user;
     }
 }
