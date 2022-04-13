@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class DAOPeripherals {
-
     //Return a list of all Peripheral records as objects
     public static ObservableList<Peripheral> selectAllPeripherals() {
         ObservableList<Peripheral> peripherals = FXCollections.observableArrayList();
@@ -35,7 +34,7 @@ public class DAOPeripherals {
                 //Convert Timestamp to LocalDateTime
                 LocalDateTime entryDateTime = entryDate.toLocalDateTime();
 
-                //Create a new Computer object using that information and add to return list
+                //Create a new Peripheral object using that information and add to return list
                 Peripheral peripheral = new Peripheral(equipmentId, type, modelNumber, serialNumber, location, entryDateTime, userId, peripheralType, condition);
                 peripherals.add(peripheral);
             }
