@@ -35,7 +35,7 @@
                                         <Insets bottom="5.0" />
                                     </HBox.margin>
                                 </Label>
-                                <TextField fx:id="fieldUserSearch" alignment="TOP_LEFT" onKeyPressed="#onKeyPressSearchUsers" prefHeight="25.0" prefWidth="200.0">
+                                <TextField fx:id="fieldUserSearch" alignment="TOP_LEFT" onKeyPressed="#onKeyPressSearchUsers" prefHeight="25.0" prefWidth="200.0" promptText="Search by User ID or Full Name">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>
