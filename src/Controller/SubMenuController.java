@@ -35,8 +35,11 @@ public class SubMenuController implements Initializable {
     }
 
     @FXML
-    void onActionDisplayInventory(ActionEvent event) {
-
+    void onActionDisplayEquipment(ActionEvent event) throws IOException {
+        stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
+        scene = FXMLLoader.load(getClass().getResource("/View/ViewEquipment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML

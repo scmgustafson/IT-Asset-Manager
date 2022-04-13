@@ -73,13 +73,19 @@ public class EquipmentController implements Initializable {
     }
 
     @FXML
-    void onActionDisplayAddEquipment(ActionEvent event) {
-
+    void onActionDisplayAddEquipment(ActionEvent event) throws IOException {
+        stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
+        scene = FXMLLoader.load(getClass().getResource("/View/ViewAddEquipment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML
-    void onActionDisplayEditEquipment(ActionEvent event) {
-
+    void onActionDisplayEditEquipment(ActionEvent event) throws IOException {
+        stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
+        scene = FXMLLoader.load(getClass().getResource("/View/ViewEditEquipment.fxml"));
+        stage.setScene(new Scene(scene));
+        stage.show();
     }
 
     @FXML

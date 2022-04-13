@@ -19,7 +19,7 @@
                         <Font name="System Bold" size="24.0" />
                     </font>
                 </Label>
-                <Button fx:id="btnInventory" mnemonicParsing="false" onAction="#onActionDisplayInventory" prefHeight="39.0" prefWidth="160.0" text="INVENTORY">
+                <Button fx:id="btnInventory" mnemonicParsing="false" onAction="#onActionDisplayEquipment" prefHeight="39.0" prefWidth="160.0" text="INVENTORY">
                     <font>
                         <Font size="18.0" />
                     </font>
@@ -40,7 +40,7 @@
                         <Insets />
                     </VBox.margin>
                 </Button>
-                <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionExit" prefHeight="39.0" prefWidth="160.0" text="EXIT">
+                <Button fx:id="btnExit" mnemonicParsing="false" onAction="#onActionExit" prefHeight="39.0" prefWidth="160.0" text="BACK">
                     <font>
                         <Font size="18.0" />
                     </font>
