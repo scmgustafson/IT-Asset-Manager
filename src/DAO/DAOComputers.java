@@ -1,6 +1,7 @@
 package DAO;
 
 import Model.Computer;
+import Model.User;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -45,12 +46,46 @@ public class DAOComputers{
         return computers;
     }
 
+    public static ObservableList<Computer> selectAllComputersByUser(User user) {
+        ObservableList<Computer> computers = FXCollections.observableArrayList();
+        try {
+            String query = "Select * FROM computers WHERE user_ID = ?";
+            PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            statement.setInt(1, user.getUserId());
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                //Get a record's information from SQL query
+                int equipmentId = result.getInt("equipment_ID");
+                String type = result.getString("type");
+                String modelNumber = result.getString("model_number");
+                String serialNumber = result.getString("serial_number");
+                String location = result.getString("location");
+                Timestamp entryDate = result.getTimestamp("created_date");
+                int userId = result.getInt("user_ID");
+                String gpuType = result.getString("gpu_type");
+                String purchasePrice = result.getString("purchase_price");
+
+                //Convert Timestamp to LocalDateTime
+                LocalDateTime entryDateTime = entryDate.toLocalDateTime();
+
+                //Create a new Computer object using that information and add to return list
+                Computer computer = new Computer(equipmentId, type, modelNumber, serialNumber, location, entryDateTime, userId, gpuType, purchasePrice);
+                computers.add(computer);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return computers;
+    }
+
     public static int insert(Computer computer) {
         int rowsAffected = 0;
         try {
             //Specify insert query and set bind variables with parameter object information
             String query = "INSERT INTO computers (equipment_id, type, model_number, serial_number, location, created_date, gpu_type, purchase_price, user_ID) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             statement.setInt(1, computer.getEquipmentId());
             statement.setString(2, computer.getType());

@@ -1,5 +1,6 @@
 package DAO;
 
+import Model.User;
 import Model.ViewingDevice;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
@@ -15,8 +16,42 @@ public class DAOViewingDevice {
     public static ObservableList<ViewingDevice> selectAllViewingDevices() {
         ObservableList<ViewingDevice> viewingDevices = FXCollections.observableArrayList();
         try {
-            String query = "Select * FROM viewing_devices;";
+            String query = "Select * FROM viewing_devices";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                //Get a record's information from SQL query
+                int equipmentId = result.getInt("equipment_ID");
+                String type = result.getString("type");
+                String modelNumber = result.getString("model_number");
+                String serialNumber = result.getString("serial_number");
+                String location = result.getString("location");
+                Timestamp entryDate = result.getTimestamp("created_date");
+                int userId = result.getInt("user_ID");
+                String screenSize = result.getString("screen_size");
+                String inputType = result.getString("input_type");
+
+                //Convert Timestamp to LocalDateTime
+                LocalDateTime entryDateTime = entryDate.toLocalDateTime();
+
+                //Create a new ViewingDevice object using that information and add to return list
+                ViewingDevice viewingDevice = new ViewingDevice(equipmentId, type, modelNumber, serialNumber, location, entryDateTime, userId, screenSize, inputType);
+                viewingDevices.add(viewingDevice);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return viewingDevices;
+    }
+
+    public static ObservableList<ViewingDevice> selectAllViewingDevicesByUser(User user) {
+        ObservableList<ViewingDevice> viewingDevices = FXCollections.observableArrayList();
+        try {
+            String query = "Select * FROM viewing_devices WHERE user_ID = ?";
+            PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            statement.setInt(1, user.getUserId());
             ResultSet result = statement.executeQuery();
 
             while (result.next()) {
@@ -50,7 +85,7 @@ public class DAOViewingDevice {
         try {
             //Specify insert query and set bind variables with parameter object information
             String query = "INSERT INTO viewing_devices (equipment_id, type, model_number, serial_number, location, created_date, screen_size, input_type, user_ID) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             statement.setInt(1, viewingDevice.getEquipmentId());
             statement.setString(2, viewingDevice.getType());
