@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -16,6 +17,8 @@ import java.util.ResourceBundle;
 public class SubMenuController implements Initializable {
     private Stage stage;
     private Parent scene;
+
+    private User sentUser;
 
     @FXML
     private Button btnInventory;
@@ -64,5 +67,9 @@ public class SubMenuController implements Initializable {
         scene = FXMLLoader.load(getClass().getResource("/View/ViewLoginMenu.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
+    }
+
+    public void sendUser(User user) {
+        this.sentUser = user;
     }
 }

@@ -58,6 +58,7 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
+                        <ComboBox fx:id="comboType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Model Number" GridPane.rowIndex="2">
                             <font>
                                 <Font size="14.0" />
@@ -77,7 +78,6 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <ComboBox fx:id="comboType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <TextField fx:id="fieldUser" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>
