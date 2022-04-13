@@ -59,6 +59,12 @@
                                 <Font size="14.0" />
                             </font></Label>
                         <TextField fx:id="fieldFullName" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <Label text="Username" GridPane.rowIndex="2">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="fieldUsername" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <Label text="Password" GridPane.rowIndex="3">
                             <font>
                                 <Font size="14.0" />
@@ -73,12 +79,6 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <Label text="Username" GridPane.rowIndex="2">
-                            <font>
-                                <Font size="14.0" />
-                            </font>
-                        </Label>
-                        <TextField fx:id="fieldUsername" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ComboBox fx:id="comboDepartment" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                     </children>
                 </GridPane>

@@ -20,6 +20,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -147,10 +148,33 @@ public class UsersController implements Initializable {
 
     @FXML
     void onActionDisplayEditUser(ActionEvent event) throws IOException {
-        stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewEditUser.fxml"));
-        stage.setScene(new Scene(scene));
-        stage.show();
+        //Prepare alert object
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("EditUser Error");
+
+        //Prepare loader to pass User data
+        var loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("/View/ViewEditUser.fxml"));
+        loader.load();
+
+        //Check to see if a User is selected in table
+        User selectedUser = tableUsers.getSelectionModel().getSelectedItem();
+        //Check that a user is selected
+        if (selectedUser == null) {
+            alert.setContentText("A user is not selected in the user table! Please select a user and try again.");
+            alert.showAndWait();
+        }
+        else {
+            //Get controller of view that data is being passed to and call sendUser()
+            EditUserController controller = loader.getController();
+            controller.sendUser(selectedUser);
+
+            //Change view to EditUser view
+            stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
+            scene = loader.getRoot();
+            stage.setScene(new Scene(scene));
+            stage.show();
+        }
     }
 
     @FXML
@@ -163,7 +187,7 @@ public class UsersController implements Initializable {
         User selectedUser = tableUsers.getSelectionModel().getSelectedItem();
         //Check that a user is selected
         if (selectedUser == null) {
-            alert.setContentText("A user is not selected in the user table!");
+            alert.setContentText("A user is not selected in the user table! Please select a user and try again.");
             alert.showAndWait();
         }
         else {
@@ -178,6 +202,9 @@ public class UsersController implements Initializable {
             else {
                 //Delete the specified object and refresh the TableView
                 DAOUsers.delete(selectedUser);
+                labelUIMessage.setTextFill(Color.GREEN);
+                labelUIMessage.setText("User " + selectedUser.getUsername() + " has been deleted successfully!");
+                labelUIMessage.setVisible(true);
                 refreshTable();
             }
         }
