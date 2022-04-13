@@ -2,7 +2,7 @@ package Model;
 
 import java.time.LocalDateTime;
 
-public class Equipment {
+public abstract class Equipment {
     private int equipmentId;
     private String type;
     private String modelNumber;

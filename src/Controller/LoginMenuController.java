@@ -1,5 +1,6 @@
 package Controller;
 
+import Utility.JDBC;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,6 +47,7 @@ public class LoginMenuController implements Initializable {
     @FXML
     void onActionExit(ActionEvent event) {
         //Close the application
+        JDBC.closeConnection();
         System.exit(0);
     }
 }

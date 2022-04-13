@@ -1,6 +1,6 @@
 package Model;
 
-public abstract class User {
+public class User {
     private int userId;
     private String fullName;
     private String username;
