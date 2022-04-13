@@ -1,5 +1,6 @@
 package Controller;
 
+import Model.Equipment;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class EquipmentController implements Initializable {
@@ -25,34 +27,34 @@ public class EquipmentController implements Initializable {
     private TextField fieldEquipmentSearch;
 
     @FXML
-    private TableView<?> tableEquipment;
+    private TableView<Equipment> tableEquipment;
 
     @FXML
-    private TableColumn<?, ?> colEquipmentId;
+    private TableColumn<Equipment, Integer> colEquipmentId;
 
     @FXML
-    private TableColumn<?, ?> colType;
+    private TableColumn<Equipment, String> colType;
 
     @FXML
-    private TableColumn<?, ?> colModel;
+    private TableColumn<Equipment, String> colModel;
 
     @FXML
-    private TableColumn<?, ?> colSerial;
+    private TableColumn<Equipment, String> colSerial;
 
     @FXML
-    private TableColumn<?, ?> colEntryDateTime;
+    private TableColumn<Equipment, LocalDateTime> colEntryDateTime;
 
     @FXML
-    private TableColumn<?, ?> colLocation;
+    private TableColumn<Equipment, String> colLocation;
 
     @FXML
-    private TableColumn<?, ?> colUser;
+    private TableColumn<Equipment, String> colUser;
 
     @FXML
-    private TableColumn<?, ?> colExtra1;
+    private TableColumn<String[], String> colExtra1;
 
     @FXML
-    private TableColumn<?, ?> colExtra2;
+    private TableColumn<String[], String> colExtra2;
 
     @FXML
     private Label labelUIMessage;
