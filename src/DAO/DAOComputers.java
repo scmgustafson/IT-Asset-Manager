@@ -11,7 +11,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class DAOComputers{
-
     //Return a list of all Computer records as objects
     public static ObservableList<Computer> selectAllComputers() {
         ObservableList<Computer> computers = FXCollections.observableArrayList();
@@ -50,7 +49,7 @@ public class DAOComputers{
         int rowsAffected = 0;
         try {
             //Specify insert query and set bind variables with parameter object information
-            String query = "INSERT INTO computer (equipment_id, type, model_number, serial_number, location, created_date, gpu_type, purchase_price, user_ID) " +
+            String query = "INSERT INTO computers (equipment_id, type, model_number, serial_number, location, created_date, gpu_type, purchase_price, user_ID) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             statement.setInt(1, computer.getEquipmentId());
