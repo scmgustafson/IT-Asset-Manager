@@ -12,7 +12,7 @@ public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String location = "//localhost/"; //Specifies URL/IP of DB
-    private static final String databaseName = "client_schedule"; //Specifies DB to run queries on
+    private static final String databaseName = "asset_manager"; //Specifies DB to run queries on
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL //Allows to switch between server or mysql service timezone
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
     private static final String userName = "sqlUser"; // Username
