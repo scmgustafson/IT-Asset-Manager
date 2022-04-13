@@ -11,12 +11,12 @@ import java.sql.SQLException;
 public abstract class JDBC {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
-    private static final String location = "//localhost/"; //Specifies URL/IP of DB
-    private static final String databaseName = "client_schedule"; //Specifies DB to run queries on
+    private static final String location = "//capstone-database.c6z6xhfatfk7.us-west-1.rds.amazonaws.com/"; //Specifies URL/IP of DB
+    private static final String databaseName = "asset_manager"; //Specifies DB to run queries on
     private static final String jdbcUrl = protocol + vendor + location + databaseName + "?connectionTimeZone = SERVER"; // LOCAL //Allows to switch between server or mysql service timezone
     private static final String driver = "com.mysql.cj.jdbc.Driver"; // Driver reference
-    private static final String userName = "sqlUser"; // Username
-    private static String password = "Passw0rd!"; // Password
+    private static final String userName = "dbadmin"; // Username
+    private static String password = "capstone543!"; // Password
     private static Connection connection = null;  // Connection Interface
     private static PreparedStatement preparedStatement;
 
