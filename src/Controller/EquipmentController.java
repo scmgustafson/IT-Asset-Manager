@@ -1,7 +1,11 @@
 package Controller;
 
-import Model.Equipment;
-import Model.User;
+import DAO.DAOComputers;
+import DAO.DAOPeripherals;
+import DAO.DAOViewingDevice;
+import Model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +13,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.PortUnreachableException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
@@ -78,15 +84,88 @@ public class EquipmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loader = new FXMLLoader();
+        //Hide UI feedback message
+        labelUIMessage.setVisible(false);
+
         //Hide extra data columns on view start
         colExtra1.setVisible(false);
         colExtra2.setVisible(false);
         colLocation.setPrefWidth(240);
         colUser.setPrefWidth(240);
+
+        //Populate Type Combo Box
+        ObservableList<String> equipmentTypes = FXCollections.observableArrayList();
+        equipmentTypes.add("All");
+        equipmentTypes.add("Computers");
+        equipmentTypes.add("Peripherals");
+        equipmentTypes.add("Viewing Devices");
+        comboEquipmentType.setItems(equipmentTypes);
+        comboEquipmentType.getSelectionModel().select("All");
+
+        //Populate TableView
+        ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+        ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+        ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
+        ObservableList<Equipment> allEquipment = FXCollections.observableArrayList();
+        allEquipment.addAll(allComputers);
+        allEquipment.addAll(allPeripherals);
+        allEquipment.addAll(allViewingDevices);
+
+        tableEquipment.setItems(allEquipment);
+        colEquipmentId.setCellValueFactory(new PropertyValueFactory<>("equipmentId"));
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colModel.setCellValueFactory(new PropertyValueFactory<>("modelNumber"));
+        colSerial.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
+        colEntryDateTime.setCellValueFactory(new PropertyValueFactory<>("entryDateTime"));
+        colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+        colUser.setCellValueFactory(new PropertyValueFactory<>("userId"));
+
+        //Sort TableView by Equipment ID
+        colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+        tableEquipment.getSortOrder().add(colEquipmentId);
+        tableEquipment.sort();
     }
 
     public void onActionEquipmentTypeSelect(ActionEvent event) {
+        ObservableList<Equipment> allEquipment = FXCollections.observableArrayList();
+        if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Computers")) {
+            allEquipment.addAll(DAOComputers.selectAllComputers());
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Peripherals")) {
+            allEquipment.addAll(DAOPeripherals.selectAllPeripherals());
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Viewing Devices")) {
+            allEquipment.addAll(DAOViewingDevice.selectAllViewingDevices());
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else {
+            ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+            ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+            ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
+            allEquipment.addAll(allComputers);
+            allEquipment.addAll(allPeripherals);
+            allEquipment.addAll(allViewingDevices);
 
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
     }
 
     public void onKeyPressSearchEquipment(KeyEvent keyEvent) {

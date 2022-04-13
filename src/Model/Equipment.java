@@ -1,5 +1,8 @@
 package Model;
 
+import DAO.DAOUsers;
+import javafx.collections.ObservableList;
+
 import java.time.LocalDateTime;
 
 public abstract class Equipment {
