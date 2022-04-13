@@ -20,14 +20,11 @@ public abstract class JDBC {
     private static Connection connection = null;  // Connection Interface
     private static PreparedStatement preparedStatement;
 
-    /**
-     * openConnection() method starts the initial connection to the SQL database.
-     * Utilizes the DriverManager getConnection() method with the previously specified class fields to start the connection.
-     * */
+//    openConnection() method starts the initial connection to the SQL database.
+//    Utilizes the DriverManager getConnection() method with the previously specified class fields to start the connection.
     public static void openConnection() {
         try {
             Class.forName(driver); // Locate Driver
-            //password = Details.getPassword(); // Assign password - WHY IS THIS HERE??
             connection = DriverManager.getConnection(jdbcUrl, userName, password); // creates reference Connection object
             System.out.println("Connection successful!");
         }
@@ -35,9 +32,7 @@ public abstract class JDBC {
             System.out.println(e.getMessage());
         }
     }
-    /**
-     * closeConnection() method terminates the SQL database connection.
-     * */
+//    closeConnection() method terminates the SQL database connection.
     public static void closeConnection() {
         try {
             connection.close();
@@ -47,10 +42,7 @@ public abstract class JDBC {
             System.out.println(e.getMessage());
         }
     }
-    /**
-     * Getter method for connection.
-     * @return the connection
-     * */
+
     public static Connection getConnection() {
         return connection;
     }
@@ -61,10 +53,7 @@ public abstract class JDBC {
         else
             System.out.println("Prepared Statement Creation Failed!");
     }
-    /**
-     * Getter method for preparedStatement.
-     * @return the preparedStatement
-     * */
+
     public static PreparedStatement getPreparedStatement() throws SQLException {
         if (preparedStatement != null)
             return preparedStatement;
