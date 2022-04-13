@@ -14,7 +14,7 @@ public class DAOUsers{
     public static ObservableList<User> selectAllUsers() {
         ObservableList<User> users = FXCollections.observableArrayList();
         try {
-            String query = "Select * FROM users;";
+            String query = "Select * FROM users";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             ResultSet result = statement.executeQuery();
 
