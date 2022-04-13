@@ -11,4 +11,20 @@ public class Peripheral extends Equipment {
         this.peripheralType = peripheralType;
         this.condition = condition;
     }
+
+    public String getPeripheralType() {
+        return peripheralType;
+    }
+
+    public void setPeripheralType(String peripheralType) {
+        this.peripheralType = peripheralType;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
 }
