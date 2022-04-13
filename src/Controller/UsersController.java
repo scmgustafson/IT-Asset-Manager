@@ -14,42 +14,30 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class EquipmentController implements Initializable {
+public class UsersController implements Initializable {
     private Stage stage;
     private Parent scene;
 
     @FXML
-    private TextField fieldEquipmentSearch;
+    private TextField fieldUserSearch;
 
     @FXML
-    private TableView<?> tableEquipment;
+    private TableView<?> tableUsers;
 
     @FXML
-    private TableColumn<?, ?> colEquipmentId;
+    private TableColumn<?, ?> colUserId;
 
     @FXML
-    private TableColumn<?, ?> colQuantity;
+    private TableColumn<?, ?> colFullName;
+
+    @FXML
+    private TableColumn<?, ?> colUsername;
+
+    @FXML
+    private TableColumn<?, ?> colDepartment;
 
     @FXML
     private TableColumn<?, ?> colType;
-
-    @FXML
-    private TableColumn<?, ?> colModel;
-
-    @FXML
-    private TableColumn<?, ?> colSerial;
-
-    @FXML
-    private TableColumn<?, ?> colEntryDateTime;
-
-    @FXML
-    private TableColumn<?, ?> colLocation;
-
-    @FXML
-    private TableColumn<?, ?> colUser;
-
-    @FXML
-    private Label labelUIMessage;
 
     @FXML
     private Button btnAdd;
@@ -63,33 +51,37 @@ public class EquipmentController implements Initializable {
     @FXML
     private Button btnBack;
 
+    @FXML
+    private Label labelUIMessage;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
     }
 
-    public void onKeyPressSearchEquipment(KeyEvent keyEvent) {
+    @FXML
+    void onKeyPressSearchUsers(KeyEvent event) {
 
     }
 
     @FXML
-    void onActionDisplayAddEquipment(ActionEvent event) throws IOException {
+    void onActionDisplayAddUser(ActionEvent event) throws IOException {
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewAddEquipment.fxml"));
+        scene = FXMLLoader.load(getClass().getResource("/View/ViewAddUser.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
     @FXML
-    void onActionDisplayEditEquipment(ActionEvent event) throws IOException {
+    void onActionDisplayEditUser(ActionEvent event) throws IOException {
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
-        scene = FXMLLoader.load(getClass().getResource("/View/ViewEditEquipment.fxml"));
+        scene = FXMLLoader.load(getClass().getResource("/View/ViewEditUser.fxml"));
         stage.setScene(new Scene(scene));
         stage.show();
     }
 
     @FXML
-    void onActionDeleteEquipment(ActionEvent event) {
+    void onActionDeleteUser(ActionEvent event) {
 
     }
 
