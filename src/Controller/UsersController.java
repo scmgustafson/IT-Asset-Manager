@@ -1,7 +1,13 @@
 package Controller;
 
+import DAO.DAOComputers;
+import DAO.DAOPeripherals;
 import DAO.DAOUsers;
+import DAO.DAOViewingDevice;
+import Model.Computer;
+import Model.Peripheral;
 import Model.User;
+import Model.ViewingDevice;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -149,7 +155,32 @@ public class UsersController implements Initializable {
 
     @FXML
     void onActionDeleteUser(ActionEvent event) {
+        //Prepare alert object
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Delete User Error");
 
+        //Attempt to delete selected user
+        User selectedUser = tableUsers.getSelectionModel().getSelectedItem();
+        //Check that a user is selected
+        if (selectedUser == null) {
+            alert.setContentText("A user is not selected in the user table!");
+            alert.showAndWait();
+        }
+        else {
+            //Check that the selected user does not have any associated equipment entries, if so - prevent deletion
+            ObservableList<Computer> associatedComputers = DAOComputers.selectAllComputersByUser(selectedUser);
+            ObservableList<Peripheral> associatedPeripherals = DAOPeripherals.selectAllPeripheralsByUser(selectedUser);
+            ObservableList<ViewingDevice> associatedViewingDevices = DAOViewingDevice.selectAllViewingDevicesByUser(selectedUser);
+            if (associatedComputers.size() > 0 || associatedPeripherals.size() > 0 || associatedViewingDevices.size() > 0) {
+                alert.setContentText("The selected user is associated with at least one equipment entry. Please delete any associated equipment entries and then try again.");
+                alert.showAndWait();
+            }
+            else {
+                //Delete the specified object and refresh the TableView
+                DAOUsers.delete(selectedUser);
+                refreshTable();
+            }
+        }
     }
 
     @FXML
