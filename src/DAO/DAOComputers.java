@@ -80,6 +80,40 @@ public class DAOComputers{
         return computers;
     }
 
+    public static ObservableList<Computer> selectAllComputersByLocation(String location) {
+        ObservableList<Computer> computers = FXCollections.observableArrayList();
+        try {
+            String query = "Select * FROM computers WHERE location = ?";
+            PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            statement.setString(1, location);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                //Get a record's information from SQL query
+                int equipmentId = result.getInt("equipment_ID");
+                String type = result.getString("type");
+                String modelNumber = result.getString("model_number");
+                String serialNumber = result.getString("serial_number");
+                String newLocation = result.getString("location");
+                Timestamp entryDate = result.getTimestamp("created_date");
+                int userId = result.getInt("user_ID");
+                String gpuType = result.getString("gpu_type");
+                String purchasePrice = result.getString("purchase_price");
+
+                //Convert Timestamp to LocalDateTime
+                LocalDateTime entryDateTime = entryDate.toLocalDateTime();
+
+                //Create a new Computer object using that information and add to return list
+                Computer computer = new Computer(equipmentId, type, modelNumber, serialNumber, newLocation, entryDateTime, userId, gpuType, purchasePrice);
+                computers.add(computer);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return computers;
+    }
+
     public static int insert(Computer computer) {
         int rowsAffected = 0;
         try {

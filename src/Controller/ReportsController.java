@@ -91,7 +91,23 @@ public class ReportsController implements Initializable {
 
     @FXML
     void onActionTypeLocationSelect(ActionEvent event) {
+        String selectedType = comboType.getSelectionModel().getSelectedItem();
+        String selectedLocation = comboLocation.getSelectionModel().getSelectedItem();
 
+        if (selectedType == null || selectedLocation == null) {
+            return;
+        }
+        else {
+            if (selectedType.equals("Computer")) {
+                fieldResults.setText(String.valueOf(DAOComputers.selectAllComputersByLocation(selectedLocation).size()));
+            }
+            else if (selectedType.equals("Peripheral")) {
+                fieldResults.setText(String.valueOf(DAOPeripherals.selectAllPeripheralsByLocation(selectedLocation).size()));
+            }
+            else if (selectedType.equals("Viewing Device")) {
+                fieldResults.setText(String.valueOf(DAOViewingDevice.selectAllViewingDevicesByLocation(selectedLocation).size()));
+            }
+        }
     }
 
     @FXML

@@ -80,6 +80,40 @@ public class DAOViewingDevice {
         return viewingDevices;
     }
 
+    public static ObservableList<ViewingDevice> selectAllViewingDevicesByLocation(String location) {
+        ObservableList<ViewingDevice> viewingDevices = FXCollections.observableArrayList();
+        try {
+            String query = "Select * FROM viewing_devices WHERE location = ?";
+            PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            statement.setString(1, location);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                //Get a record's information from SQL query
+                int equipmentId = result.getInt("equipment_ID");
+                String type = result.getString("type");
+                String modelNumber = result.getString("model_number");
+                String serialNumber = result.getString("serial_number");
+                String newLocation = result.getString("location");
+                Timestamp entryDate = result.getTimestamp("created_date");
+                int userId = result.getInt("user_ID");
+                String screenSize = result.getString("screen_size");
+                String inputType = result.getString("input_type");
+
+                //Convert Timestamp to LocalDateTime
+                LocalDateTime entryDateTime = entryDate.toLocalDateTime();
+
+                //Create a new ViewingDevice object using that information and add to return list
+                ViewingDevice viewingDevice = new ViewingDevice(equipmentId, type, modelNumber, serialNumber, newLocation, entryDateTime, userId, screenSize, inputType);
+                viewingDevices.add(viewingDevice);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return viewingDevices;
+    }
+
     public static int insert(ViewingDevice viewingDevice) {
         int rowsAffected = 0;
         try {

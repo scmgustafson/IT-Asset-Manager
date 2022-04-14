@@ -80,6 +80,40 @@ public class DAOPeripherals {
         return peripherals;
     }
 
+    public static ObservableList<Peripheral> selectAllPeripheralsByLocation(String location) {
+        ObservableList<Peripheral> peripherals = FXCollections.observableArrayList();
+        try {
+            String query = "Select * FROM peripherals WHERE location = ?";
+            PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
+            statement.setString(1, location);
+            ResultSet result = statement.executeQuery();
+
+            while (result.next()) {
+                //Get a record's information from SQL query
+                int equipmentId = result.getInt("equipment_ID");
+                String type = result.getString("type");
+                String modelNumber = result.getString("model_number");
+                String serialNumber = result.getString("serial_number");
+                String newLocation = result.getString("location");
+                Timestamp entryDate = result.getTimestamp("created_date");
+                int userId = result.getInt("user_ID");
+                String peripheralType = result.getString("peripheral_type");
+                String condition = result.getString("equipment_condition");
+
+                //Convert Timestamp to LocalDateTime
+                LocalDateTime entryDateTime = entryDate.toLocalDateTime();
+
+                //Create a new Peripheral object using that information and add to return list
+                Peripheral peripheral = new Peripheral(equipmentId, type, modelNumber, serialNumber, newLocation, entryDateTime, userId, peripheralType, condition);
+                peripherals.add(peripheral);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return peripherals;
+    }
+
     public static int insert(Peripheral peripheral) {
         int rowsAffected = 0;
         try {
