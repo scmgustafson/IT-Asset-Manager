@@ -65,10 +65,10 @@ public class EquipmentController implements Initializable {
     private TableColumn<Equipment, String> colUser;
 
     @FXML
-    private TableColumn<ExtraPair, String> colExtra1;
+    private TableColumn<Equipment, String> colExtra1;
 
     @FXML
-    private TableColumn<ExtraPair, String> colExtra2;
+    private TableColumn<Equipment, String> colExtra2;
 
     @FXML
     private Label labelUIMessage;
