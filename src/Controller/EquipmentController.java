@@ -88,6 +88,7 @@ public class EquipmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loader = new FXMLLoader();
+
         //Hide UI feedback message
         labelUIMessage.setVisible(false);
 

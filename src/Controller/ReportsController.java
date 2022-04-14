@@ -31,6 +31,15 @@ public class ReportsController implements Initializable {
     private FXMLLoader loader;
 
     @FXML
+    private Label labelComputerCount;
+
+    @FXML
+    private Label labelPeripheralCount;
+
+    @FXML
+    private Label labelViewingDevicesCount;
+
+    @FXML
     private ComboBox<String> comboType;
 
     @FXML
@@ -69,6 +78,14 @@ public class ReportsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loader = new FXMLLoader();
+
+        //Set current amounts
+        ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+        ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+        ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
+        labelComputerCount.setText(String.valueOf(allComputers.size()));
+        labelPeripheralCount.setText(String.valueOf(allPeripherals.size()));
+        labelViewingDevicesCount.setText(String.valueOf(allViewingDevices.size()));
 
         //Populate Combo Boxes
         ObservableList<String> equipmentTypes = FXCollections.observableArrayList();

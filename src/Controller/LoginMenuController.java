@@ -1,7 +1,13 @@
 package Controller;
 
+import DAO.DAOComputers;
+import DAO.DAOPeripherals;
 import DAO.DAOUsers;
+import DAO.DAOViewingDevice;
+import Model.Computer;
+import Model.Peripheral;
 import Model.User;
+import Model.ViewingDevice;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -101,6 +107,9 @@ public class LoginMenuController implements Initializable {
                             stage.setScene(new Scene(scene));
                             stage.show();
 
+                            //Check stock levels and display alerts if needed (only once)
+                            checkStockAlerts();
+
                             loopFlag = false;
                             break;
                         }
@@ -128,5 +137,31 @@ public class LoginMenuController implements Initializable {
         //Close the application
         JDBC.closeConnection();
         System.exit(0);
+    }
+
+    public void checkStockAlerts() {
+        //Check for and display stock level alerts
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle("Stock Warning");
+
+        ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+        ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+        ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
+        int computerCount = allComputers.size();
+        int peripheralCount = allPeripherals.size();
+        int viewingDeviceCount = allViewingDevices.size();
+
+        if (computerCount < 10) {
+            alert.setContentText("STOCK WARNING: There are currently less than 10 computers in inventory stock.\n\nPlease check the Reports page for the current count.");
+            alert.showAndWait();
+        }
+        if (peripheralCount < 5) {
+            alert.setContentText("STOCK WARNING: There are currently less than 5 peripherals in inventory stock.\n\nPlease check the Reports page for the current count.");
+            alert.showAndWait();
+        }
+        if (viewingDeviceCount < 5) {
+            alert.setContentText("STOCK WARNING: There are currently less than 5 viewing devices in inventory stock.\n\nPlease check the Reports page for the current count.");
+            alert.showAndWait();
+        }
     }
 }

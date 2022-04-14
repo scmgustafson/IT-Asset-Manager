@@ -1,6 +1,13 @@
 package Controller;
 
+import DAO.DAOComputers;
+import DAO.DAOPeripherals;
+import DAO.DAOViewingDevice;
+import Model.Computer;
+import Model.Peripheral;
 import Model.User;
+import Model.ViewingDevice;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

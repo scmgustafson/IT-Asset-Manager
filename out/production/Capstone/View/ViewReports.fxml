@@ -26,6 +26,39 @@
                 </Label>
                 <VBox alignment="TOP_CENTER" prefHeight="109.0" prefWidth="800.0" spacing="5.0">
                     <children>
+                  <Label text="Current quantity of equipment by type:">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="400.0" spacing="10.0">
+                     <children>
+                        <Label text="Computers:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelComputerCount" text="RESULT1" />
+                        <Label text="Peripherals:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelPeripheralCount" text="RESULT2" />
+                        <Label text="Viewing Devices:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="labelViewingDevicesCount" text="RESULT3" />
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
                         <Label text="Total amount of equipment by type and location:">
                             <VBox.margin>
                                 <Insets />
@@ -64,7 +97,7 @@
                             </font>
                         </Label>
                         <ComboBox fx:id="comboUser" onAction="#onActionUserSelect" prefWidth="150.0" promptText="User" />
-                        <TableView fx:id="tableUserInventory" prefHeight="385.0" prefWidth="1070.0">
+                        <TableView fx:id="tableUserInventory" prefHeight="300.0" prefWidth="1070.0">
                             <columns>
                                 <TableColumn fx:id="colEquipmentId" prefWidth="104.0" text="Equipment ID" />
                                 <TableColumn fx:id="colType" prefWidth="141.0" text="Type" />
