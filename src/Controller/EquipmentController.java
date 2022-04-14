@@ -205,11 +205,48 @@ public class EquipmentController implements Initializable {
 
     @FXML
     void onActionDisplayEditEquipment(ActionEvent event) throws IOException {
+        //Send tracked user information
         loader.setLocation(getClass().getResource("/View/ViewEditEquipment.fxml"));
         loader.load();
         EditEquipmentController controller = loader.getController();
         controller.passUser(sentUser);
 
+        //Determine what kind of object is being sent to next screen, then send data
+        Equipment selectedEquipment = tableEquipment.getSelectionModel().getSelectedItem();
+        String selectedType = selectedEquipment.getType().toLowerCase();
+
+        if (selectedType.equals("computer")) {
+            ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+            Computer selectedComputer = null;
+            for (Computer computer : allComputers) {
+                if (selectedEquipment.getEquipmentId() == computer.getEquipmentId()) {
+                    selectedComputer = computer;
+                    controller.sendComputer(selectedComputer);
+                }
+            }
+
+        }
+        else if (selectedType.equals("peripheral")) {
+            ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+            Peripheral selectedPeripheral = null;
+            for (Peripheral peripheral : allPeripherals) {
+                if (selectedEquipment.getEquipmentId() == peripheral.getEquipmentId()) {
+                    selectedPeripheral = peripheral;
+                    controller.sendPeripheral(selectedPeripheral);
+                }
+            }
+        }
+        else if (selectedType.equals("viewing device")) {
+            ObservableList<ViewingDevice> allVDs = DAOViewingDevice.selectAllViewingDevices();
+            ViewingDevice selectedVD = null;
+            for (ViewingDevice vd : allVDs) {
+                if (selectedEquipment.getEquipmentId() == vd.getEquipmentId()) {
+                    selectedVD = vd;
+                    controller.sendViewingDevice(selectedVD);
+                }
+            }
+        }
+        //Mvoe to next View
         stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
         scene = loader.getRoot();
         stage.setScene(new Scene(scene));
@@ -229,7 +266,7 @@ public class EquipmentController implements Initializable {
             System.out.println("Not a computer, trying others");
         }
         try {
-            Peripheral peripheral = (Peripheral) tableEquipment.getSelectionModel().getSelectedItem();
+            Peripheral peripheral = (Peripheral)tableEquipment.getSelectionModel().getSelectedItem();
             DAOPeripherals.delete(peripheral);
             labelUIMessage.setTextFill(Color.GREEN);
             labelUIMessage.setText("Equipment - ID: " + peripheral.getEquipmentId() + " has been deleted successfully!");
@@ -239,7 +276,7 @@ public class EquipmentController implements Initializable {
             System.out.println("Not a peripheral, trying others");
         }
         try {
-            ViewingDevice viewingDevice = (ViewingDevice) tableEquipment.getSelectionModel().getSelectedItem();
+            ViewingDevice viewingDevice = (ViewingDevice)tableEquipment.getSelectionModel().getSelectedItem();
             DAOViewingDevice.delete(viewingDevice);
             labelUIMessage.setTextFill(Color.GREEN);
             labelUIMessage.setText("Equipment - ID: " + viewingDevice.getEquipmentId() + " has been deleted successfully!");
