@@ -144,7 +144,7 @@ public class EditUserController implements Initializable {
                 loader.setLocation(getClass().getResource("/View/ViewUsers.fxml"));
                 loader.load();
                 UsersController controller = loader.getController();
-                controller.sendUser(sentUser);
+                controller.sendUser(passUser);
 
                 stage = (Stage)(((Button)event.getSource()).getScene().getWindow());
                 scene = loader.getRoot();
