@@ -34,10 +34,12 @@
                 </HBox>
                 <GridPane alignment="CENTER" hgap="10.0" vgap="5.0">
                     <columnConstraints>
-                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="100.0" />
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="200.0" />
+                        <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="245.0" minWidth="10.0" prefWidth="115.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="391.0" minWidth="10.0" prefWidth="175.0" />
                     </columnConstraints>
                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -53,11 +55,12 @@
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <TextField fx:id="fieldId" alignment="CENTER" disable="true" prefWidth="15.0" promptText="DISPLAY EQUIPMENT ID HERE" GridPane.columnIndex="1" />
+                        <TextField fx:id="fieldId" alignment="CENTER" disable="true" prefWidth="15.0" promptText="Auto Gen - Disabled" GridPane.columnIndex="1" />
                         <Label text="Type" GridPane.rowIndex="1">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
+                        <ComboBox fx:id="comboType" onAction="#onActionTypeComboSelect" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                         <Label text="Model Number" GridPane.rowIndex="2">
                             <font>
                                 <Font size="14.0" />
@@ -73,12 +76,23 @@
                                 <Font size="14.0" />
                             </font></Label>
                         <ComboBox fx:id="comboLocation" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                        <Label text="User" GridPane.rowIndex="5">
+                        <Label fx:id="labelExtra1" text="EXTRA" GridPane.rowIndex="5">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="comboExtra1" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <Label fx:id="labelExtra2" text="EXTRA 2" GridPane.rowIndex="6">
+                            <font>
+                                <Font size="14.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="comboExtra2" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <Label text="User" GridPane.rowIndex="7">
                             <font>
                                 <Font size="14.0" />
                             </font></Label>
-                        <ComboBox fx:id="comboType" prefHeight="25.0" prefWidth="264.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="fieldUser" alignment="CENTER" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <TextField fx:id="fieldUser" disable="true" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                     </children>
                 </GridPane>
                 <HBox alignment="TOP_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
@@ -90,7 +104,10 @@
                         <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#onActionCancel" text="CANCEL">
                             <font>
                                 <Font size="14.0" />
-                            </font></Button>
+                            </font>
+                            <HBox.margin>
+                                <Insets bottom="1.0" />
+                            </HBox.margin></Button>
                     </children>
                     <VBox.margin>
                         <Insets right="75.0" top="15.0" />

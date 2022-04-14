@@ -1,17 +1,26 @@
 package Controller;
 
-import Model.User;
+import DAO.DAOComputers;
+import DAO.DAOPeripherals;
+import DAO.DAOUsers;
+import DAO.DAOViewingDevice;
+import Model.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 public class ReportsController implements Initializable {
@@ -22,37 +31,37 @@ public class ReportsController implements Initializable {
     private FXMLLoader loader;
 
     @FXML
-    private ComboBox<?> comboType;
+    private ComboBox<String> comboType;
 
     @FXML
-    private ComboBox<?> comboLocation;
+    private ComboBox<String> comboLocation;
 
     @FXML
     private TextField fieldResults;
 
     @FXML
-    private ComboBox<?> comboUser;
+    private ComboBox<User> comboUser;
 
     @FXML
-    private TableView<?> tableUserInventory;
+    private TableView<Equipment> tableUserInventory;
 
     @FXML
-    private TableColumn<?, ?> colEquipmentId;
+    private TableColumn<Equipment, Integer> colEquipmentId;
 
     @FXML
-    private TableColumn<?, ?> colType;
+    private TableColumn<Equipment, String> colType;
 
     @FXML
-    private TableColumn<?, ?> colModel;
+    private TableColumn<Equipment, String> colModel;
 
     @FXML
-    private TableColumn<?, ?> colSerial;
+    private TableColumn<Equipment, String> colSerial;
 
     @FXML
-    private TableColumn<?, ?> colEntryDateTime;
+    private TableColumn<Equipment, LocalDateTime> colEntryDateTime;
 
     @FXML
-    private TableColumn<?, ?> colLocation;
+    private TableColumn<Equipment, String> colLocation;
 
     @FXML
     private Button btnBack;
@@ -60,6 +69,23 @@ public class ReportsController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loader = new FXMLLoader();
+
+        //Populate Combo Boxes
+        ObservableList<String> equipmentTypes = FXCollections.observableArrayList();
+        equipmentTypes.add("Computer");
+        equipmentTypes.add("Peripheral");
+        equipmentTypes.add("Viewing Device");
+        comboType.setItems(equipmentTypes);
+
+        ObservableList<String> locations = FXCollections.observableArrayList();
+        locations.add("San Jose");
+        locations.add("New York");
+        locations.add("Austin");
+        locations.add("Seattle");
+        comboLocation.setItems(locations);
+
+        ObservableList<User> users = DAOUsers.selectAllUsers();
+        comboUser.setItems(users);
 
     }
 
@@ -70,7 +96,35 @@ public class ReportsController implements Initializable {
 
     @FXML
     void onActionUserSelect(ActionEvent event) {
+        User selectedUser = comboUser.getSelectionModel().getSelectedItem();
 
+        ObservableList<Equipment> associatedEquipment = FXCollections.observableArrayList();
+        ObservableList<Computer> associatedComputers = DAOComputers.selectAllComputersByUser(selectedUser);
+        ObservableList<Peripheral> associatedPeripherals = DAOPeripherals.selectAllPeripheralsByUser(selectedUser);
+        ObservableList<ViewingDevice> associatedViewingDevices = DAOViewingDevice.selectAllViewingDevicesByUser(selectedUser);
+        associatedEquipment.addAll(associatedComputers);
+        associatedEquipment.addAll(associatedPeripherals);
+        associatedEquipment.addAll(associatedViewingDevices);
+
+        if (associatedEquipment.size() > 0) {
+            tableUserInventory.setItems(associatedEquipment);
+            colEquipmentId.setCellValueFactory(new PropertyValueFactory<>("equipmentId"));
+            colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            colModel.setCellValueFactory(new PropertyValueFactory<>("modelNumber"));
+            colSerial.setCellValueFactory(new PropertyValueFactory<>("serialNumber"));
+            colEntryDateTime.setCellValueFactory(new PropertyValueFactory<>("entryDateTime"));
+            colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableUserInventory.getSortOrder().add(colEquipmentId);
+            tableUserInventory.sort();
+        }
+        else {
+            ObservableList<Equipment> emptyList = FXCollections.observableArrayList();
+            tableUserInventory.setItems(emptyList);
+            tableUserInventory.setPlaceholder(new Label("There are no associated inventory entries for User: " + selectedUser.getFullName()));
+        }
     }
 
     @FXML

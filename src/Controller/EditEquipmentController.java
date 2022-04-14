@@ -257,6 +257,7 @@ public class EditEquipmentController implements Initializable {
             comboChoice1.add("20\"");
             comboChoice1.add("24\"");
             comboChoice1.add("27\"");
+            comboChoice1.add("> 27\"");
             comboExtra1.setItems(comboChoice1);
             ObservableList<String> comboChoice2 = FXCollections.observableArrayList();
             comboChoice2.add("HDMI");
