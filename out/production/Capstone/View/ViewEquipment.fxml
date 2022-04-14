@@ -14,6 +14,7 @@
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EquipmentController">
     <children>
+              <Label alignment="CENTER" minHeight="50.0" prefHeight="75.0" prefWidth="301.0" text="Enter an ID number or search for a Serial Number by starting your search with a symbol (Ex: !123 or ?ABC)" wrapText="true" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0" />
         <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1280.0" spacing="10.0">
             <children>
                 <Label text="Equipment Inventory" textAlignment="CENTER">
@@ -41,15 +42,15 @@
                               <Insets />
                            </HBox.margin>
                         </ComboBox>
-                                <Label alignment="CENTER" text="Search:">
-                                    <font>
-                                        <Font name="System Bold" size="14.0" />
-                                    </font>
-                                    <HBox.margin>
-                                        <Insets bottom="5.0" left="590.0" />
-                                    </HBox.margin>
-                                </Label>
-                                <TextField fx:id="fieldEquipmentSearch" alignment="TOP_LEFT" onKeyPressed="#onKeyPressSearchEquipment" prefHeight="25.0" prefWidth="200.0">
+                        <Label alignment="CENTER" text="Search:">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="590.0" />
+                           </HBox.margin>
+                        </Label>
+                                <TextField fx:id="fieldEquipmentSearch" alignment="TOP_LEFT" onKeyPressed="#onKeyPressSearchEquipment" prefHeight="25.0" prefWidth="200.0" promptText="Equipment ID or Serial Number">
                                     <HBox.margin>
                                         <Insets />
                                     </HBox.margin>

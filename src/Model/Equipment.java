@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 import java.time.LocalDateTime;
 
-public abstract class Equipment {
+public class Equipment {
     private int equipmentId;
     private String type;
     private String modelNumber;

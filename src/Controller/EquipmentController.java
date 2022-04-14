@@ -1,8 +1,6 @@
 package Controller;
 
-import DAO.DAOComputers;
-import DAO.DAOPeripherals;
-import DAO.DAOViewingDevice;
+import DAO.*;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,13 +12,19 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.PortUnreachableException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class EquipmentController implements Initializable {
@@ -61,10 +65,10 @@ public class EquipmentController implements Initializable {
     private TableColumn<Equipment, String> colUser;
 
     @FXML
-    private TableColumn<String[], String> colExtra1;
+    private TableColumn<ExtraPair, String> colExtra1;
 
     @FXML
-    private TableColumn<String[], String> colExtra2;
+    private TableColumn<ExtraPair, String> colExtra2;
 
     @FXML
     private Label labelUIMessage;
@@ -127,49 +131,63 @@ public class EquipmentController implements Initializable {
     }
 
     public void onActionEquipmentTypeSelect(ActionEvent event) {
-        ObservableList<Equipment> allEquipment = FXCollections.observableArrayList();
-        if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Computers")) {
-            allEquipment.addAll(DAOComputers.selectAllComputers());
-            tableEquipment.setItems(allEquipment);
-            //Sort TableView by Equipment ID
-            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
-            tableEquipment.getSortOrder().add(colEquipmentId);
-            tableEquipment.sort();
-        }
-        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Peripherals")) {
-            allEquipment.addAll(DAOPeripherals.selectAllPeripherals());
-            tableEquipment.setItems(allEquipment);
-            //Sort TableView by Equipment ID
-            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
-            tableEquipment.getSortOrder().add(colEquipmentId);
-            tableEquipment.sort();
-        }
-        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Viewing Devices")) {
-            allEquipment.addAll(DAOViewingDevice.selectAllViewingDevices());
-            tableEquipment.setItems(allEquipment);
-            //Sort TableView by Equipment ID
-            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
-            tableEquipment.getSortOrder().add(colEquipmentId);
-            tableEquipment.sort();
-        }
-        else {
-            ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
-            ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
-            ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
-            allEquipment.addAll(allComputers);
-            allEquipment.addAll(allPeripherals);
-            allEquipment.addAll(allViewingDevices);
-
-            tableEquipment.setItems(allEquipment);
-            //Sort TableView by Equipment ID
-            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
-            tableEquipment.getSortOrder().add(colEquipmentId);
-            tableEquipment.sort();
-        }
+        refreshTable();
     }
 
-    public void onKeyPressSearchEquipment(KeyEvent keyEvent) {
-
+    public void onKeyPressSearchEquipment(KeyEvent event) {
+        //Only run search logic if Enter key pressed
+        if (event.getCode() == KeyCode.ENTER) {
+            //Refresh table so that search is only run on the entire User list
+            refreshTable();
+            //Get search text
+            String search = fieldEquipmentSearch.getText().toLowerCase(Locale.ROOT);
+            if (search.isBlank()) {
+                refreshTable();
+                return;
+            }
+            //Determine if using is searching by User ID or by full name
+            try {
+                //Search for user by ID, highlighting it in the TableView if found
+                int searchId = Integer.parseInt(search);
+                ObservableList<Equipment> foundEquipment = FXCollections.observableArrayList();
+                for (Equipment equipment : DAOEquipment.selectAllEquipment()) {
+                    if (equipment.getEquipmentId() == searchId) {
+                        foundEquipment.add(equipment);
+                    }
+                }
+                if (foundEquipment.size() > 0) {
+                    tableEquipment.setItems(foundEquipment);
+                    comboEquipmentType.getSelectionModel().select("All");
+                }
+                else {
+                    refreshTable();
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No matching inventory item found!");
+                    alert.setTitle("Search Message");
+                    alert.showAndWait();
+                }
+            }
+            catch (Exception e){
+                String newSearch = search.substring(1);
+                //Search for user by Full Name, adding it to the filtered list if containing search string
+                ObservableList<Equipment> filteredEquipment = FXCollections.observableArrayList();
+                for (Equipment equipment : DAOEquipment.selectAllEquipment()) {
+                    if (equipment.getSerialNumber().toLowerCase(Locale.ROOT).contains(newSearch)) {
+                        filteredEquipment.add(equipment);
+                    }
+                }
+                //Check to see if there is no match found
+                if (filteredEquipment.size() > 0) {
+                    //Check if there is only 1 match or multiple matches
+                    tableEquipment.setItems(filteredEquipment);
+                }
+                else {
+                    refreshTable();
+                    Alert alert = new Alert(Alert.AlertType.WARNING, "No matching inventory item found!");
+                    alert.setTitle("Search Message");
+                    alert.showAndWait();
+                }
+            }
+        }
     }
 
     @FXML
@@ -200,7 +218,38 @@ public class EquipmentController implements Initializable {
 
     @FXML
     void onActionDeleteEquipment(ActionEvent event) {
+        try {
+            Computer computer = (Computer)tableEquipment.getSelectionModel().getSelectedItem();
+            DAOComputers.delete(computer);
+            labelUIMessage.setTextFill(Color.GREEN);
+            labelUIMessage.setText("Equipment - ID: " + computer.getEquipmentId() + " has been deleted successfully!");
+            labelUIMessage.setVisible(true);
+        }
+        catch (Exception e) {
+            System.out.println("Not a computer, trying others");
+        }
+        try {
+            Peripheral peripheral = (Peripheral) tableEquipment.getSelectionModel().getSelectedItem();
+            DAOPeripherals.delete(peripheral);
+            labelUIMessage.setTextFill(Color.GREEN);
+            labelUIMessage.setText("Equipment - ID: " + peripheral.getEquipmentId() + " has been deleted successfully!");
+            labelUIMessage.setVisible(true);
+        }
+        catch (Exception e) {
+            System.out.println("Not a peripheral, trying others");
+        }
+        try {
+            ViewingDevice viewingDevice = (ViewingDevice) tableEquipment.getSelectionModel().getSelectedItem();
+            DAOViewingDevice.delete(viewingDevice);
+            labelUIMessage.setTextFill(Color.GREEN);
+            labelUIMessage.setText("Equipment - ID: " + viewingDevice.getEquipmentId() + " has been deleted successfully!");
+            labelUIMessage.setVisible(true);
+        }
+        catch (Exception e) {
+            System.out.println("Not a viewing device, trying others");
+        }
 
+        refreshTable();
     }
 
     @FXML
@@ -218,5 +267,49 @@ public class EquipmentController implements Initializable {
 
     public void sendUser(User user) {
         this.sentUser = user;
+    }
+
+    public void refreshTable() {
+        ObservableList<Equipment> allEquipment = FXCollections.observableArrayList();
+        if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Computers")) {
+            ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+            //Set TableView to all Computer objects
+            allEquipment.addAll(allComputers);
+            tableEquipment.setItems(allEquipment);
+
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Peripherals")) {
+            allEquipment.addAll(DAOPeripherals.selectAllPeripherals());
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else if (comboEquipmentType.getSelectionModel().getSelectedItem().equals("Viewing Devices")) {
+            allEquipment.addAll(DAOViewingDevice.selectAllViewingDevices());
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
+        else {
+            ObservableList<Computer> allComputers = DAOComputers.selectAllComputers();
+            ObservableList<Peripheral> allPeripherals = DAOPeripherals.selectAllPeripherals();
+            ObservableList<ViewingDevice> allViewingDevices = DAOViewingDevice.selectAllViewingDevices();
+            allEquipment.addAll(allComputers);
+            allEquipment.addAll(allPeripherals);
+            allEquipment.addAll(allViewingDevices);
+            tableEquipment.setItems(allEquipment);
+            //Sort TableView by Equipment ID
+            colEquipmentId.setSortType(TableColumn.SortType.ASCENDING);
+            tableEquipment.getSortOrder().add(colEquipmentId);
+            tableEquipment.sort();
+        }
     }
 }
