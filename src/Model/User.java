@@ -6,14 +6,16 @@ public class User {
     private String username;
     private String password;
     private String type;
+    private String location;
     private String department;
 
-    public User(int userId, String fullName, String username, String password, String type, String department) {
+    public User(int userId, String fullName, String username, String password, String type, String location, String department) {
         this.userId = userId;
         this.fullName = fullName;
         this.username = username;
         this.password = password;
         this.type = type;
+        this.location = location;
         this.department = department;
     }
 
@@ -60,6 +62,14 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getDepartment() {

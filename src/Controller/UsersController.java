@@ -55,6 +55,9 @@ public class UsersController implements Initializable {
     private TableColumn<User, String> colDepartment;
 
     @FXML
+    private TableColumn<User, String> colLocation;
+
+    @FXML
     private TableColumn<User, String> colType;
 
     @FXML
@@ -84,6 +87,7 @@ public class UsersController implements Initializable {
             colFullName.setCellValueFactory(new PropertyValueFactory<>("fullName"));
             colUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
             colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
             colDepartment.setCellValueFactory(new PropertyValueFactory<>("department"));
 
         }

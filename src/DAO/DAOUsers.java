@@ -25,10 +25,11 @@ public class DAOUsers{
                 String username = result.getString("username");
                 String password = result.getString("password");
                 String type = result.getString("type");
+                String location = result.getString("location");
                 String department = result.getString("department");
 
                 //Create a new User object using that information and add to return list
-                User user = new User(userId, fullname, username, password, type, department);
+                User user = new User(userId, fullname, username, password, type, location, department);
                 users.add(user);
             }
         }
@@ -42,14 +43,15 @@ public class DAOUsers{
         int rowsAffected = 0;
         try {
             //Specify insert query and set bind variables with parameter object information
-            String query = "INSERT INTO users (user_ID, full_name, username, password, type, department) " +
-                    "VALUES (?, ?, ?, ?, ?, ?);";
+            String query = "INSERT INTO users (user_ID, full_name, username, password, type, location, department) " +
+                    "VALUES (?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             statement.setInt(1, user.getUserId());
             statement.setString(2, user.getFullName());
             statement.setString(3, user.getUsername());
             statement.setString(4, user.getPassword());
             statement.setString(5, user.getType());
+            statement.setString(6, user.getLocation());
             statement.setString(6, user.getDepartment());
 
             rowsAffected = statement.executeUpdate();
@@ -63,15 +65,16 @@ public class DAOUsers{
     public static int update(User user) {
         int rowsAffected = 0;
         try {
-            String query = "UPDATE users SET full_name = ?, username = ?, password = ?, type = ?, department = ? " +
+            String query = "UPDATE users SET full_name = ?, username = ?, password = ?, type = ?, location = ?, department = ? " +
                     "WHERE user_ID = ?";
             PreparedStatement statement = JDBC.getConnection().prepareStatement(query);
             statement.setString(1, user.getFullName());
             statement.setString(2, user.getUsername());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getType());
-            statement.setString(5, user.getDepartment());
-            statement.setInt(6, user.getUserId());
+            statement.setString(5, user.getLocation());
+            statement.setString(6, user.getDepartment());
+            statement.setInt(7, user.getUserId());
 
             rowsAffected = statement.executeUpdate();
         }

@@ -43,6 +43,9 @@ public class AddUserController implements Initializable {
     private ComboBox<String> comboUserType;
 
     @FXML
+    private ComboBox<String> comboUserLocation;
+
+    @FXML
     private ComboBox<String> comboDepartment;
 
     @FXML
@@ -59,6 +62,13 @@ public class AddUserController implements Initializable {
         userTypes.add("Standard");
         userTypes.add("Admin");
         comboUserType.setItems(userTypes);
+
+        ObservableList<String> locations = FXCollections.observableArrayList();
+        locations.add("San Jose");
+        locations.add("New York");
+        locations.add("Austin");
+        locations.add("Seattle");
+        comboUserLocation.setItems(locations);
 
         ObservableList<String> departments = FXCollections.observableArrayList();
         departments.add("IT");
@@ -84,6 +94,7 @@ public class AddUserController implements Initializable {
         String username = "";
         String password = "";
         String type = "";
+        String location = "";
         String department = "";
 
         //Read in field inputs for validation
@@ -91,13 +102,14 @@ public class AddUserController implements Initializable {
         String usernameInput = fieldUsername.getText();
         String passwordInput = fieldPassword.getText();
         String typeInput = comboUserType.getSelectionModel().getSelectedItem();
+        String locationInput = comboUserLocation.getSelectionModel().getSelectedItem();
         String departmentInput = comboDepartment.getSelectionModel().getSelectedItem();
 
         //Begin field validation loop
         boolean loopFlag = true;
         while (loopFlag) {
             //Check for blank fields
-            if (nameInput.isBlank() || usernameInput.isBlank() || passwordInput.isBlank() || typeInput.isBlank() || departmentInput.isBlank()) {
+            if (nameInput.isBlank() || usernameInput.isBlank() || passwordInput.isBlank() || typeInput.isBlank() || locationInput.isBlank() || departmentInput.isBlank()) {
                 alert.setContentText("All fields must be filled out.");
                 alert.showAndWait();
                 loopFlag = false;
@@ -135,9 +147,10 @@ public class AddUserController implements Initializable {
             username = usernameInput;
             password = passwordInput;
             type = typeInput;
+            location = locationInput;
             department = departmentInput;
 
-            User user = new User(userId, fullname, username, password, type, department);
+            User user = new User(userId, fullname, username, password, type, location, department);
             try {
                 DAOUsers.insert(user);
 
