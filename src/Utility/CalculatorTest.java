@@ -28,13 +28,13 @@ class CalculatorTest {
     }
 
     @Test
-    @DisplayName("Test checkIfLesser with a greater number, should return True")
+    @DisplayName("Test checkIfLesser with a lesser number, should return True")
     void testLesserWithGreater() {
         assertTrue(calculator.checkIfLesser(0, 1), "0 < 10 should be true");
     }
 
     @Test
-    @DisplayName("Test checkIfLesser with a greater number, should return True")
+    @DisplayName("Test checkIfLesser with a greater number, should return False")
     void testLesserWithlesser() {
         assertFalse(calculator.checkIfLesser(1, 0), "10 < 0 should be false");
     }
