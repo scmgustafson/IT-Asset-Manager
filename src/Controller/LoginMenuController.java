@@ -8,6 +8,7 @@ import Model.Computer;
 import Model.Peripheral;
 import Model.User;
 import Model.ViewingDevice;
+import Utility.Calculator;
 import Utility.JDBC;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -140,6 +141,7 @@ public class LoginMenuController implements Initializable {
     }
 
     public boolean checkStockAlerts(int computerCount, int peripheralCount, int vdCount) {
+        Calculator calculator = new Calculator();
         //Check for and display stock level alerts
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("Stock Warning");
@@ -150,17 +152,17 @@ public class LoginMenuController implements Initializable {
 
         boolean returnVal = false;
 
-        if (computerCount < 10) {
+        if (calculator.checkIfLesser(computerCount, 10)) {
             alert.setContentText("STOCK WARNING: There are currently less than 10 computers in inventory stock.\n\nPlease check the Reports page for the current count.");
             alert.showAndWait();
             returnVal = true;
         }
-        if (peripheralCount < 5) {
+        if (calculator.checkIfLesser(peripheralCount, 5)) {
             alert.setContentText("STOCK WARNING: There are currently less than 5 peripherals in inventory stock.\n\nPlease check the Reports page for the current count.");
             alert.showAndWait();
             returnVal = true;
         }
-        if (vdCount < 5) {
+        if (calculator.checkIfLesser(vdCount, 5)) {
             alert.setContentText("STOCK WARNING: There are currently less than 5 viewing devices in inventory stock.\n\nPlease check the Reports page for the current count.");
             alert.showAndWait();
             returnVal = true;
